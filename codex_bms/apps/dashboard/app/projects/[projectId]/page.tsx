@@ -9,12 +9,13 @@ import {
 import { DashboardPageShell } from "../../../lib/page-shell.tsx";
 import { getDashboardProjectDetail } from "../../../lib/project-data.ts";
 
-export default function DashboardProjectDetailPage({
+export default async function DashboardProjectDetailPage({
   params
 }: {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }) {
-  const detail = getDashboardProjectDetail(params.projectId);
+  const { projectId } = await params;
+  const detail = getDashboardProjectDetail(projectId);
 
   if (!detail.project) {
     return (

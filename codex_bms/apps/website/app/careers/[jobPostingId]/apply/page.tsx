@@ -48,12 +48,14 @@ export default async function WebsiteCareerApplyPage({
   params,
   searchParams
 }: {
-  params: { jobPostingId: string };
-  searchParams?: { error?: string; fields?: string };
+  params: Promise<{ jobPostingId: string }>;
+  searchParams?: Promise<{ error?: string; fields?: string }>;
 }) {
-  const jobPosting = await getPublicJobPostingData(params.jobPostingId);
+  const { jobPostingId } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const jobPosting = await getPublicJobPostingData(jobPostingId);
   const boardData = await getPublicJobBoardData();
-  const submissionAlert = getSubmissionAlert(searchParams);
+  const submissionAlert = getSubmissionAlert(resolvedSearchParams);
 
   return (
     <WebsitePageShell>
@@ -76,7 +78,7 @@ export default async function WebsiteCareerApplyPage({
               </div>
             ) : null}
             <form action={submitJobApplicationAction} encType="multipart/form-data">
-              <input name="jobPostingId" type="hidden" value={params.jobPostingId} />
+              <input name="jobPostingId" type="hidden" value={jobPostingId} />
               <FormGrid>
                 <TextField label="First name" name="firstName" required span="6" />
                 <TextField label="Last name" name="lastName" required span="6" />
@@ -109,7 +111,7 @@ export default async function WebsiteCareerApplyPage({
                 <button className="bms-button bms-button--primary" type="submit">
                   Submit application
                 </button>
-                <a className="bms-button bms-button--secondary" href={`/careers/${params.jobPostingId}`}>
+                <a className="bms-button bms-button--secondary" href={`/careers/${jobPostingId}`}>
                   Review posting
                 </a>
               </div>

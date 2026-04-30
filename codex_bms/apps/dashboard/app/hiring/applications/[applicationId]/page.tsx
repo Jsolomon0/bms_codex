@@ -5,9 +5,10 @@ import { getHiringApplicationDetailData } from "../../../../lib/hiring-data.ts";
 export default async function DashboardHiringApplicationDetailPage({
   params
 }: {
-  params: { applicationId: string };
+  params: Promise<{ applicationId: string }>;
 }) {
-  const detail = await getHiringApplicationDetailData(params.applicationId);
+  const { applicationId } = await params;
+  const detail = await getHiringApplicationDetailData(applicationId);
 
   return (
     <DashboardPageShell activeHref="/hiring" title="Application detail" subtitle="Review, interviews, offers, and conversion">

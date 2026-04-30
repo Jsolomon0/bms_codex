@@ -12,10 +12,12 @@ import { getPortalMessageThreadDetail } from "../../../lib/messages-data.ts";
 export default async function PortalMessageThreadPage({
   params
 }: {
-  params: { threadId: string };
+  params: Promise<{ threadId: string }>;
 }) {
+  const { threadId } = await params;
+
   try {
-    const detail = await getPortalMessageThreadDetail(params.threadId);
+    const detail = await getPortalMessageThreadDetail(threadId);
 
     return (
       <PortalPageShell activeHref="/messages" title="Messages" subtitle={detail.thread.subject}>

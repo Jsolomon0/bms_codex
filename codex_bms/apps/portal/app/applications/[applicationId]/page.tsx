@@ -5,9 +5,10 @@ import { getApplicantApplicationDetail } from "../../../lib/hiring-data.ts";
 export default async function ApplicantApplicationDetailPage({
   params
 }: {
-  params: { applicationId: string };
+  params: Promise<{ applicationId: string }>;
 }) {
-  const detail = await getApplicantApplicationDetail(params.applicationId);
+  const { applicationId } = await params;
+  const detail = await getApplicantApplicationDetail(applicationId);
 
   return (
     <PortalPageShell activeHref="/applications" title="Application status" subtitle="Hiring activity for your own record">

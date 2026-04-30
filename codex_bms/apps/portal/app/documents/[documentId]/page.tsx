@@ -12,10 +12,12 @@ import { getPortalDocumentDetail } from "../../../lib/document-data.ts";
 export default async function PortalDocumentDetailPage({
   params
 }: {
-  params: { documentId: string };
+  params: Promise<{ documentId: string }>;
 }) {
+  const { documentId } = await params;
+
   try {
-    const detail = await getPortalDocumentDetail(params.documentId);
+    const detail = await getPortalDocumentDetail(documentId);
 
     if (!detail.document) {
       throw new Error("missing");

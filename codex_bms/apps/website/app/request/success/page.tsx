@@ -1,12 +1,13 @@
 import { PageHeader, SectionGrid, SimpleList, StatsCard } from "../../../../../packages/ui/src/react/index.tsx";
 import { WebsitePageShell } from "../../../lib/page-shell.tsx";
 
-export default function WebsiteRequestSuccessPage({
+export default async function WebsiteRequestSuccessPage({
   searchParams
 }: {
-  searchParams?: { requestId?: string };
+  searchParams?: Promise<{ requestId?: string }>;
 }) {
-  const requestId = searchParams?.requestId;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const requestId = resolvedSearchParams?.requestId;
 
   return (
     <WebsitePageShell>

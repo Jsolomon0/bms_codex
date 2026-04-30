@@ -19,10 +19,12 @@ function formatCurrency(amountCents: number, currency = "USD"): string {
 export default async function PublicPaymentSharePage({
   params
 }: {
-  params: { token: string };
+  params: Promise<{ token: string }>;
 }) {
+  const { token } = await params;
+
   try {
-    const detail = await getPublicSharedInvoice(params.token);
+    const detail = await getPublicSharedInvoice(token);
 
     return (
       <WebsitePageShell>

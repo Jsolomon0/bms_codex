@@ -12,10 +12,12 @@ import { getPublicSharedProject } from "../../../lib/project-data.ts";
 export default async function PublicProjectSharePage({
   params
 }: {
-  params: { token: string };
+  params: Promise<{ token: string }>;
 }) {
+  const { token } = await params;
+
   try {
-    const detail = await getPublicSharedProject(params.token);
+    const detail = await getPublicSharedProject(token);
 
     return (
       <WebsitePageShell>

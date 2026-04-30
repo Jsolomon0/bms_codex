@@ -5,9 +5,10 @@ import { getPublicJobPostingData } from "../../../lib/hiring-data.ts";
 export default async function WebsiteCareerPostingPage({
   params
 }: {
-  params: { jobPostingId: string };
+  params: Promise<{ jobPostingId: string }>;
 }) {
-  const jobPosting = await getPublicJobPostingData(params.jobPostingId);
+  const { jobPostingId } = await params;
+  const jobPosting = await getPublicJobPostingData(jobPostingId);
 
   return (
     <WebsitePageShell>

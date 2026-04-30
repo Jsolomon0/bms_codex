@@ -9,12 +9,13 @@ import {
 import { DashboardPageShell } from "../../../lib/page-shell.tsx";
 import { getDashboardDocumentDetail } from "../../../lib/document-data.ts";
 
-export default function DashboardDocumentDetailPage({
+export default async function DashboardDocumentDetailPage({
   params
 }: {
-  params: { documentId: string };
+  params: Promise<{ documentId: string }>;
 }) {
-  const detail = getDashboardDocumentDetail(params.documentId);
+  const { documentId } = await params;
+  const detail = getDashboardDocumentDetail(documentId);
 
   if (!detail.document) {
     return (

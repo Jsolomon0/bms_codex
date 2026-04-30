@@ -1,11 +1,13 @@
 import { KeyValueSummary, PageHeader, SectionGrid } from "../../../../../../../packages/ui/src/react/index.tsx";
 import { WebsitePageShell } from "../../../../../lib/page-shell.tsx";
 
-export default function WebsiteCareerApplySuccessPage({
+export default async function WebsiteCareerApplySuccessPage({
   searchParams
 }: {
-  searchParams?: { applicationId?: string };
+  searchParams?: Promise<{ applicationId?: string }>;
 }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+
   return (
     <WebsitePageShell>
       <PageHeader
@@ -22,7 +24,7 @@ export default function WebsiteCareerApplySuccessPage({
           title="Submission receipt"
           description="Submission created hiring records without granting access to any non-hiring modules."
           items={[
-            { label: "Application id", value: searchParams?.applicationId ?? "Generated" },
+            { label: "Application id", value: resolvedSearchParams?.applicationId ?? "Generated" },
             { label: "Applicant scope", value: "Self only" },
             { label: "Internal review", value: "Owner/admin only" },
             { label: "Audit trail", value: "Recorded" }

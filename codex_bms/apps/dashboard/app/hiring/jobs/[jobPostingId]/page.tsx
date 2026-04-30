@@ -5,9 +5,10 @@ import { getHiringJobPostingDetailData } from "../../../../lib/hiring-data.ts";
 export default async function DashboardHiringJobPostingPage({
   params
 }: {
-  params: { jobPostingId: string };
+  params: Promise<{ jobPostingId: string }>;
 }) {
-  const detail = await getHiringJobPostingDetailData(params.jobPostingId);
+  const { jobPostingId } = await params;
+  const detail = await getHiringJobPostingDetailData(jobPostingId);
 
   return (
     <DashboardPageShell activeHref="/hiring" title="Job posting detail" subtitle="Public posting controls and applicant feed">

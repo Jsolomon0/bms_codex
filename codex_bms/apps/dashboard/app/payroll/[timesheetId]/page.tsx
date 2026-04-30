@@ -12,9 +12,10 @@ import { getDashboardTimesheetDetail } from "../../../lib/payroll-data.ts";
 export default async function DashboardTimesheetDetailPage({
   params
 }: {
-  params: { timesheetId: string };
+  params: Promise<{ timesheetId: string }>;
 }) {
-  const { detail, formatMinutes } = await getDashboardTimesheetDetail(params.timesheetId);
+  const { timesheetId } = await params;
+  const { detail, formatMinutes } = await getDashboardTimesheetDetail(timesheetId);
 
   if (!detail?.timesheet) {
     return (

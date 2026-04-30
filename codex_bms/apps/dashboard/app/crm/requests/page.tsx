@@ -8,20 +8,21 @@ import {
 import { DashboardPageShell } from "../../../lib/page-shell.tsx";
 import { getCrmHomeData, getRequestQueueData } from "../../../lib/crm-data.ts";
 
-export default function DashboardCrmRequestsPage({
+export default async function DashboardCrmRequestsPage({
   searchParams
 }: {
-  searchParams?: { error?: string; requestId?: string };
+  searchParams?: Promise<{ error?: string; requestId?: string }>;
 }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const requests = getRequestQueueData();
   const home = getCrmHomeData();
   const feedback =
-    searchParams?.error === "missing_request"
+    resolvedSearchParams?.error === "missing_request"
       ? [
           {
             title: "Request not found",
-            body: searchParams.requestId
-              ? `The request ${searchParams.requestId} is not present in the current intake runtime.`
+            body: resolvedSearchParams.requestId
+              ? `The request ${resolvedSearchParams.requestId} is not present in the current intake runtime.`
               : "The selected request is not present in the current intake runtime.",
             meta: "Queue mismatch"
           }

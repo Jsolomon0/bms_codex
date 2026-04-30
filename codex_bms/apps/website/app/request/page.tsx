@@ -48,15 +48,16 @@ function getSubmissionAlert(searchParams?: {
   return undefined;
 }
 
-export default function WebsiteRequestPage({
+export default async function WebsiteRequestPage({
   searchParams
 }: {
-  searchParams?: { error?: string; fields?: string };
+  searchParams?: Promise<{ error?: string; fields?: string }>;
 }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const consultationOptions = getPublicRequestFormOptions();
   const restrictionLabels = getShortTermRestrictionLabels();
   const uploadRules = getPublicRequestUploadRules();
-  const submissionAlert = getSubmissionAlert(searchParams);
+  const submissionAlert = getSubmissionAlert(resolvedSearchParams);
 
   return (
     <WebsitePageShell>

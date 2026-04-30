@@ -72,15 +72,17 @@ function HiddenReviewFields({
   );
 }
 
-export default function DashboardCrmRequestDetailPage({
+export default async function DashboardCrmRequestDetailPage({
   params,
   searchParams
 }: {
-  params: { requestId: string };
-  searchParams?: { result?: string; error?: string };
+  params: Promise<{ requestId: string }>;
+  searchParams?: Promise<{ result?: string; error?: string }>;
 }) {
-  const detail = getRequestDetailData(params.requestId);
-  const feedbackItem = getFeedbackItem(searchParams);
+  const { requestId } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const detail = getRequestDetailData(requestId);
+  const feedbackItem = getFeedbackItem(resolvedSearchParams);
   const actorUserId = getDashboardActor().userId;
 
   if (!detail.request || !detail.lead) {

@@ -12,10 +12,12 @@ import { getPortalProjectDetail } from "../../../lib/project-data.ts";
 export default async function PortalProjectDetailPage({
   params
 }: {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }) {
+  const { projectId } = await params;
+
   try {
-    const detail = await getPortalProjectDetail(params.projectId);
+    const detail = await getPortalProjectDetail(projectId);
 
     if (!detail?.project) {
       throw new Error("missing");

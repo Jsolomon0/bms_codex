@@ -12,10 +12,12 @@ import { getPublicSharedDocumentPreview } from "../../../lib/document-data.ts";
 export default async function PublicDocumentSharePage({
   params
 }: {
-  params: { token: string };
+  params: Promise<{ token: string }>;
 }) {
+  const { token } = await params;
+
   try {
-    const preview = await getPublicSharedDocumentPreview(params.token);
+    const preview = await getPublicSharedDocumentPreview(token);
 
     return (
       <WebsitePageShell>
