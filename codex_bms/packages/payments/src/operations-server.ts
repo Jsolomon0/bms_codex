@@ -8,6 +8,7 @@ import type {
 import {
   authorizeBillApprovalOrThrow,
   authorizeBillManageOrThrow,
+  authorizeBillView,
   authorizeBillViewOrThrow,
   authorizeExpenseApprovalOrThrow,
   authorizeExpenseCreateOrThrow,

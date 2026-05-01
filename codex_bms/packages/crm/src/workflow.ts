@@ -353,12 +353,7 @@ export class IntakeWorkflowService {
 
   listLeadPipelineStages(): readonly LeadPipelineStage[] {
     const counts = new Map<LeadStatus, number>();
-
-    for (const lead of this.repository.listLeads()) {
-      counts.set(lead.status, (counts.get(lead.status) ?? 0) + 1);
-    }
-
-    return [
+    const orderedStatuses: readonly LeadStatus[] = [
       "new",
       "reviewing",
       "awaiting_customer",
@@ -367,7 +362,13 @@ export class IntakeWorkflowService {
       "invited_long_term_customer",
       "expired",
       "rejected"
-    ].map((status) => ({
+    ];
+
+    for (const lead of this.repository.listLeads()) {
+      counts.set(lead.status, (counts.get(lead.status) ?? 0) + 1);
+    }
+
+    return orderedStatuses.map((status) => ({
       status,
       label: LEAD_STATUS_LABELS[status],
       requestCount: counts.get(status) ?? 0

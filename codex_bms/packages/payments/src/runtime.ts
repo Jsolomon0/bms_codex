@@ -1,8 +1,10 @@
 import type {
   AuditEvent,
   AuditSink,
+  InvoiceRecord,
   InvoiceActivityRecord,
-  InvoiceReminderRecord
+  InvoiceReminderRecord,
+  VisibilityFlag
 } from "../../types/src/index.ts";
 import { createInMemorySecurityContext, resolveRuntimeSecret, type InMemorySecurityContext } from "../../security/src/index.ts";
 import {
@@ -89,12 +91,12 @@ export interface PaymentsRuntime {
   organizationLabel: string;
 }
 
-function createInvoicesWithPublicLinkVisibility() {
+function createInvoicesWithPublicLinkVisibility(): readonly InvoiceRecord[] {
   return REPORTING_DEMO_INVOICES.map((invoice) =>
     invoice.customerAccountId === "customer-aria"
       ? {
           ...invoice,
-          visibilityFlags: [...new Set([...invoice.visibilityFlags, "public_link"])]
+          visibilityFlags: [...new Set<VisibilityFlag>([...invoice.visibilityFlags, "public_link"])]
         }
       : invoice
   );

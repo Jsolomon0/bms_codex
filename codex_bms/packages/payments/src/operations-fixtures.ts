@@ -114,7 +114,7 @@ export const DEMO_PURCHASE_ORDERS: readonly PurchaseOrderRecord[] = [
     currency: "USD",
     totalCents: 125000,
     expectedAt: "2026-05-02",
-    issuedAt: null,
+    issuedAt: undefined,
     status: "submitted",
     approvedByUserId: null,
     approvedAt: null,

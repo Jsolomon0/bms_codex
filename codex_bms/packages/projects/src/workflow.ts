@@ -439,7 +439,7 @@ export class ProjectManagementService {
     }
 
     const attachments = input.attachments ?? [];
-    const issues = validateProjectAttachments(attachments, "Progress update");
+    const issues = [...validateProjectAttachments(attachments, "Progress update")];
 
     if (!input.note.trim()) {
       issues.push("Progress updates require a note.");
@@ -482,7 +482,7 @@ export class ProjectManagementService {
     }
 
     const attachments = input.attachments ?? [];
-    const issues = validateProjectAttachments(attachments, "Change request");
+    const issues = [...validateProjectAttachments(attachments, "Change request")];
 
     if (!input.title.trim()) {
       issues.push("Change requests require a title.");

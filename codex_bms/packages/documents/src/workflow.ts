@@ -517,7 +517,7 @@ export class DocumentManagementService {
       throw new DocumentWorkflowError(`Document ${input.documentId} was not found.`);
     }
 
-    const issues = validateDocumentShareScope(input.shareScope);
+    const issues = [...validateDocumentShareScope(input.shareScope)];
 
     if (!document.visibilityFlags.includes("public_link")) {
       issues.push("Document visibility must include public_link before issuing a public share.");

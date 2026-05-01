@@ -34,7 +34,11 @@ const ROLE_VISIBILITY_ACCESS: Record<RoleKey, readonly VisibilityFlag[]> = {
 };
 
 function normalizeVisibility(visibility: ResourceRecord["visibility"]): readonly VisibilityFlag[] {
-  return Array.isArray(visibility) ? visibility : [visibility];
+  if (Array.isArray(visibility)) {
+    return visibility;
+  }
+
+  return [visibility as VisibilityFlag];
 }
 
 function normalizePartnerOrgIds(record: ResourceRecord): readonly string[] {
@@ -63,7 +67,12 @@ function isMembershipActive(membership: RoleMembership, now: Date): boolean {
 
 function roleHasPermission(role: RoleKey, permissionKey: PermissionKey): boolean {
   const grants = ROLE_DEFAULT_GRANTS[role];
-  return grants[0] === "*" || grants.includes(permissionKey);
+
+  if (grants[0] === "*") {
+    return true;
+  }
+
+  return (grants as readonly PermissionKey[]).includes(permissionKey);
 }
 
 function membershipHasPermission(membership: RoleMembership, permissionKey: PermissionKey): boolean {

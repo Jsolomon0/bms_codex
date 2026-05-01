@@ -18,7 +18,10 @@ export const ALLOWED_PROJECT_ATTACHMENT_MIME_TYPES = [
   "application/pdf"
 ] as const;
 
-const ALLOWED_APPROVED_REQUEST_STATUSES = ["project_draft_created", "long_term_invited"] as const;
+const ALLOWED_APPROVED_REQUEST_STATUSES: readonly ApprovedProjectRequestSnapshot["requestStatus"][] = [
+  "project_draft_created",
+  "long_term_invited"
+];
 
 const PROJECT_STATUS_TRANSITIONS: Record<ProjectStatus, readonly ProjectStatus[]> = {
   draft: ["planning", "cancelled"],

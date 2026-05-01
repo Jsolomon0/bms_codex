@@ -503,7 +503,7 @@ export class PayrollService {
   }
 
   async clockIn(input: ClockActionInput): Promise<ClockEventRecord> {
-    const issues = validateClockContext(input);
+    const issues = [...validateClockContext(input)];
     const activeSession = this.getActiveClockSession(input.employeeUserId);
     const lastEvent = this.getLatestClockEvent(input.employeeUserId);
     issues.push(
@@ -537,7 +537,7 @@ export class PayrollService {
   }
 
   async startBreak(input: ClockActionInput): Promise<ClockEventRecord> {
-    const issues = validateClockContext(input);
+    const issues = [...validateClockContext(input)];
     const activeSession = this.getActiveClockSession(input.employeeUserId);
     const lastEvent = this.getLatestClockEvent(input.employeeUserId);
     issues.push(
@@ -570,7 +570,7 @@ export class PayrollService {
   }
 
   async endBreak(input: ClockActionInput): Promise<ClockEventRecord> {
-    const issues = validateClockContext(input);
+    const issues = [...validateClockContext(input)];
     const activeSession = this.getActiveClockSession(input.employeeUserId);
     const lastEvent = this.getLatestClockEvent(input.employeeUserId);
     issues.push(
@@ -603,7 +603,7 @@ export class PayrollService {
   }
 
   async clockOut(input: ClockActionInput): Promise<TimeEntryRecord> {
-    const issues = validateClockContext(input);
+    const issues = [...validateClockContext(input)];
     const activeSession = this.getActiveClockSession(input.employeeUserId);
     const lastEvent = this.getLatestClockEvent(input.employeeUserId);
     issues.push(

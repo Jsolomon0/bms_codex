@@ -37,11 +37,23 @@ export async function submitJobApplicationAction(formData: FormData): Promise<ne
 
   try {
     const parsed = parsePublicJobApplicationFormData(formData);
+    const { resumeFile, ...applicationFields } = parsed;
+
+    if (!resumeFile) {
+      throw new HiringValidationError([
+        {
+          field: "resumeUpload",
+          message: "Resume upload is required."
+        }
+      ]);
+    }
+
     const result = await submitPublicJobApplicationServer(
       runtime,
       {
         jobPostingId,
-        ...parsed,
+        ...applicationFields,
+        resumeFile,
         screeningAnswers: readScreeningAnswers(formData)
       },
       {

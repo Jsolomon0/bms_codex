@@ -543,7 +543,7 @@ export async function getOnboardingChecklistForActor(
   applicationId: string
 ): Promise<{
   checklist: OnboardingChecklistRecord;
-  tasks: readonly HiringApplicationDetail["onboardingTasks"];
+  tasks: HiringApplicationDetail["onboardingTasks"];
 } | undefined> {
   const detail = requireApplicationDetail(runtime, applicationId);
 

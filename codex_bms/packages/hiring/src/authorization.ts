@@ -11,7 +11,8 @@ import type {
   JobPostingRecord,
   OnboardingChecklistRecord,
   PermissionKey,
-  ResourceRecord
+  ResourceRecord,
+  VisibilityFlag
 } from "../../types/src/index.ts";
 
 const APPLICATION_VIEW_PERMISSION_CANDIDATES: readonly PermissionKey[] = [
@@ -125,7 +126,7 @@ export function toInterviewResourceRecord(
   interview: InterviewRecord,
   application: JobApplicationRecord,
   profile?: ApplicantProfileRecord,
-  visibility: readonly "internal"[] | readonly "applicant"[] | readonly ("internal" | "applicant")[] = interview.visibilityFlags
+  visibility: readonly VisibilityFlag[] = interview.visibilityFlags
 ): ResourceRecord {
   return {
     resourceType: "interview",

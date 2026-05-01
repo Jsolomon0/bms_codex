@@ -50,6 +50,7 @@ const ROLE_VISIBILITY_ACCESS: Record<RoleKey, readonly VisibilityFlag[]> = {
   administrator: ["internal", "customer", "subcontractor", "supercontractor", "public_link"],
   developer: ["internal"],
   employee: ["internal", "customer", "subcontractor", "supercontractor", "public_link"],
+  applicant: [],
   customer: ["customer", "public_link"],
   subcontractor: ["subcontractor", "public_link"],
   supercontractor: ["subcontractor", "supercontractor", "public_link"]

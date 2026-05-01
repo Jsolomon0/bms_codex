@@ -412,7 +412,7 @@ export class FinanceOperationsService {
   }
 
   async createExpense(input: CreateExpenseInput): Promise<ExpenseRecord> {
-    const issues = validateExpenseInput(input);
+    const issues = [...validateExpenseInput(input)];
 
     if (input.vendorId && !this.repository.getVendorById(input.vendorId)) {
       issues.push(`Vendor ${input.vendorId} was not found.`);
@@ -474,7 +474,7 @@ export class FinanceOperationsService {
     }
 
     ensureExpenseEditable(expense);
-    const issues = validateExpenseInput(input);
+    const issues = [...validateExpenseInput(input)];
 
     if (input.vendorId && !this.repository.getVendorById(input.vendorId)) {
       issues.push(`Vendor ${input.vendorId} was not found.`);
@@ -628,7 +628,7 @@ export class FinanceOperationsService {
   }
 
   async createPurchaseOrder(input: CreatePurchaseOrderInput): Promise<PurchaseOrderRecord> {
-    const issues = validatePurchaseOrderLineItems(input.lineItems);
+    const issues = [...validatePurchaseOrderLineItems(input.lineItems)];
 
     if (!this.repository.getVendorById(input.vendorId)) {
       issues.push(`Vendor ${input.vendorId} was not found.`);
@@ -665,7 +665,7 @@ export class FinanceOperationsService {
       currency: input.currency.trim(),
       totalCents: sumLineItems(lineItems),
       expectedAt: input.expectedAt,
-      issuedAt: null,
+      issuedAt: undefined,
       status: "draft",
       approvedByUserId: null,
       approvedAt: null,
@@ -700,7 +700,7 @@ export class FinanceOperationsService {
     }
 
     ensurePurchaseOrderEditable(purchaseOrder);
-    const issues = validatePurchaseOrderLineItems(input.lineItems);
+    const issues = [...validatePurchaseOrderLineItems(input.lineItems)];
 
     if (!this.repository.getVendorById(input.vendorId)) {
       issues.push(`Vendor ${input.vendorId} was not found.`);
@@ -853,7 +853,7 @@ export class FinanceOperationsService {
   }
 
   async createBill(input: CreateBillInput): Promise<BillRecord> {
-    const issues = validateBillLineItems(input.lineItems);
+    const issues = [...validateBillLineItems(input.lineItems)];
 
     if (!this.repository.getVendorById(input.vendorId)) {
       issues.push(`Vendor ${input.vendorId} was not found.`);
@@ -933,7 +933,7 @@ export class FinanceOperationsService {
     }
 
     ensureBillEditable(bill);
-    const issues = validateBillLineItems(input.lineItems);
+    const issues = [...validateBillLineItems(input.lineItems)];
 
     if (!this.repository.getVendorById(input.vendorId)) {
       issues.push(`Vendor ${input.vendorId} was not found.`);
